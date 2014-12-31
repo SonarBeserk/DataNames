@@ -1,0 +1,32 @@
+name: ${project.name}
+version: ${project.version}
+author: ${project.author}
+description: ${project.description}
+
+depend: ${project.depends}
+main: ${project.main}
+
+commands:
+
+  ${project.name}:
+    description: master command system for the ${project.name}
+    usage: "${project.name} Usage: /${project.name.lowercase} help"
+    aliases: [${project.name.short}]
+
+  displayname:
+    description: display name command
+
+permissions:
+
+  # Singular Nodes
+  ${project.name.lowercase}.commands.reload:
+    description: "Allows use of the reload subcommand"
+    default: op
+
+  ${project.name.lowercase}.commands.set:
+    description: "Allows use of the set subcommand"
+    default: op
+
+  ${project.name.lowercase}.commands.remove:
+    description: "Allows use of the remove subcommand"
+    default: op
