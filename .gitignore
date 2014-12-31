@@ -1,0 +1,21 @@
+*.class
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Maven
+target/
+dependency-reduced-pom.xml
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.bat

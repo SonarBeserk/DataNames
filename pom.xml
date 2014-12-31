@@ -1,0 +1,156 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Project information -->
+    <name>DataNames</name>
+    <groupId>me.sonarbeserk</groupId>
+    <artifactId>datanames</artifactId>
+    <version>1.0</version>
+    <inceptionYear>2014</inceptionYear>
+    <description>Sets an item's display name based on its data</description>
+    <url>https://github.com/SonarBeserk/DataNames</url>
+
+    <!-- Properties -->
+    <properties>
+        <project.name.lowercase>datanames</project.name.lowercase>
+        <project.name.short>dn</project.name.short>
+        <project.permissionprefix>dn</project.permissionprefix>
+
+        <project.main>me.sonarbeserk.datanames.DataNames</project.main>
+        <project.author>SonarBeserk</project.author>
+
+        <project.depends>[]</project.depends>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <jdk.version>1.7</jdk.version>
+    </properties>
+
+    <!-- Repositories -->
+    <repositories>
+        <repository>
+            <id>bukkit-repo</id>
+            <url>http://repo.bukkit.org/content/groups/public</url>
+        </repository>
+    </repositories>
+
+    <!-- Dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.7.9-R0.3-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>me.sonarbeserk</groupId>
+            <artifactId>beserkcore</artifactId>
+            <version>1.1</version>
+        </dependency>
+    </dependencies>
+
+    <!-- Build settings -->
+    <build>
+        <finalName>DataNames</finalName>
+
+        <!-- Resources -->
+        <resources>
+            <resource>
+                <targetPath>.</targetPath>
+                <filtering>true</filtering>
+                <directory>${basedir}/src/main/resources/</directory>
+            </resource>
+        </resources>
+
+        <plugins>
+            <!-- Include the source jar as well -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Also generate java docs -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-docs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Define JDK for compilation -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.google.code.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <version>1.3.1</version>
+                <configuration>
+                    <header>${basedir}/src/main/resources/LICENSE.txt</header>
+                    <failIfMissing>true</failIfMissing>
+                    <includes>
+                        <include>**/**.java</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>me.sonarbeserk:beserkcore</include>
+                                </includes>
+                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>me.sonarbeserk.beserkcore</pattern>
+                                    <shadedPattern>me.sonarbeserk.shifted.beserkcore</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
