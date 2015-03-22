@@ -19,17 +19,17 @@
  * *********************************************************************************************************************
  */
 
-package me.sonarbeserk.datanames.conversations.namechange;
+package com.serkprojects.datanames.conversations.nameremoval;
 
-import me.sonarbeserk.datanames.DataNames;
+import com.serkprojects.datanames.DataNames;
 import org.bukkit.ChatColor;
 import org.bukkit.conversations.ConversationAbandonedEvent;
 import org.bukkit.conversations.ConversationAbandonedListener;
 
-public class NameChangeAbandonListener implements ConversationAbandonedListener {
+public class NameRemovalAbandonListener implements ConversationAbandonedListener {
     private DataNames plugin = null;
 
-    public NameChangeAbandonListener(DataNames plugin) {
+    public NameRemovalAbandonListener(DataNames plugin) {
         this.plugin = plugin;
     }
 
@@ -40,13 +40,13 @@ public class NameChangeAbandonListener implements ConversationAbandonedListener 
         }
 
         if (e.gracefulExit()) {
-            if (e.getContext().getSessionData("nameChanged") != null) {
-                boolean nameChanged = (boolean) e.getContext().getSessionData("nameChanged");
+            if (e.getContext().getSessionData("nameRemoved") != null) {
+                boolean nameChanged = (boolean) e.getContext().getSessionData("nameRemoved");
 
                 if (nameChanged) {
-                    e.getContext().getForWhom().sendRawMessage(ChatColor.translateAlternateColorCodes('&', plugin.getLanguage().getMessage("nameChanged")));
+                    e.getContext().getForWhom().sendRawMessage(ChatColor.translateAlternateColorCodes('&', plugin.getLanguage().getMessage("nameRemoved")));
                 } else {
-                    e.getContext().getForWhom().sendRawMessage(ChatColor.translateAlternateColorCodes('&', plugin.getLanguage().getMessage("nameNotChanged")));
+                    e.getContext().getForWhom().sendRawMessage(ChatColor.translateAlternateColorCodes('&', plugin.getLanguage().getMessage("nameNotRemoved")));
                 }
             }
         } else {

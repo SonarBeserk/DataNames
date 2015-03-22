@@ -19,9 +19,9 @@
  * *********************************************************************************************************************
  */
 
-package me.sonarbeserk.datanames.listeners;
+package com.serkprojects.datanames.listeners;
 
-import me.sonarbeserk.datanames.DataNames;
+import com.serkprojects.datanames.DataNames;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;

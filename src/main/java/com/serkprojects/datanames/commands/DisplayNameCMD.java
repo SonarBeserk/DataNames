@@ -19,13 +19,13 @@
  * *********************************************************************************************************************
  */
 
-package me.sonarbeserk.datanames.commands;
+package com.serkprojects.datanames.commands;
 
-import me.sonarbeserk.datanames.DataNames;
-import me.sonarbeserk.datanames.conversations.namechange.ConfirmNameChangePrompt;
-import me.sonarbeserk.datanames.conversations.namechange.NameChangeAbandonListener;
-import me.sonarbeserk.datanames.conversations.nameremoval.ConfirmNameRemovalPrompt;
-import me.sonarbeserk.datanames.conversations.nameremoval.NameRemovalAbandonListener;
+import com.serkprojects.datanames.DataNames;
+import com.serkprojects.datanames.conversations.namechange.ConfirmNameChangePrompt;
+import com.serkprojects.datanames.conversations.namechange.NameChangeAbandonListener;
+import com.serkprojects.datanames.conversations.nameremoval.ConfirmNameRemovalPrompt;
+import com.serkprojects.datanames.conversations.nameremoval.NameRemovalAbandonListener;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -43,13 +43,8 @@ public class DisplayNameCMD implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length == 0) {
-            if (sender instanceof Player) {
-                plugin.getMessaging().sendMessage(sender, true, true, plugin.getLanguage().getMessage("usageDisplay").replace("{name}", plugin.getDescription().getName()));
-                return true;
-            } else {
-                plugin.getMessaging().sendMessage(sender, false, false, plugin.getLanguage().getMessage("usageDisplay").replace("{name}", plugin.getDescription().getName()));
-                return true;
-            }
+            plugin.getMessaging().sendMessage(sender, true, plugin.getLanguage().getMessage("usageDisplay").replace("{name}", plugin.getDescription().getName()));
+            return true;
         }
 
         if (args.length > 0) {
@@ -77,13 +72,8 @@ public class DisplayNameCMD implements CommandExecutor {
     private boolean permissionCheck(CommandSender sender, String permission, boolean autoMessage) {
         if (!sender.hasPermission(permission)) {
             if (autoMessage) {
-                if (sender instanceof Player) {
-                    plugin.getMessaging().sendMessage(sender, true, true, plugin.getLanguage().getMessage("noPermission"));
-                    return false;
-                } else {
-                    plugin.getMessaging().sendMessage(sender, false, false, plugin.getLanguage().getMessage("noPermission"));
-                    return false;
-                }
+                plugin.getMessaging().sendMessage(sender, true, plugin.getLanguage().getMessage("noPermission"));
+                return false;
             } else {
                 return false;
             }
@@ -93,18 +83,13 @@ public class DisplayNameCMD implements CommandExecutor {
     }
 
     private void helpSubCommand(CommandSender sender) {
-        if (sender instanceof Player) {
-            plugin.getMessaging().sendMessage(sender, true, true, plugin.getLanguage().getMessage("usageDisplay"));
-            return;
-        } else {
-            plugin.getMessaging().sendMessage(sender, false, false, plugin.getLanguage().getMessage("usageDisplay"));
-            return;
-        }
+        plugin.getMessaging().sendMessage(sender, true, plugin.getLanguage().getMessage("usageDisplay"));
+        return;
     }
 
     private void setSubCommand(CommandSender sender) {
         if (!(sender instanceof Player)) {
-            plugin.getMessaging().sendMessage(sender, false, false, plugin.getLanguage().getMessage("commandPlayerRequired"));
+            plugin.getMessaging().sendMessage(sender, true, plugin.getLanguage().getMessage("commandPlayerRequired"));
             return;
         }
 
@@ -115,10 +100,10 @@ public class DisplayNameCMD implements CommandExecutor {
         Player senderPlayer = (Player) sender;
 
         if (senderPlayer.getItemInHand() == null) {
-            plugin.getMessaging().sendMessage(sender, false, true, plugin.getLanguage().getMessage("notHoldingItem"));
+            plugin.getMessaging().sendMessage(sender, true, plugin.getLanguage().getMessage("notHoldingItem"));
             return;
         } else if (senderPlayer.getItemInHand().getItemMeta() == null || senderPlayer.getItemInHand().getItemMeta().getDisplayName() == null) {
-            plugin.getMessaging().sendMessage(sender, false, true, plugin.getLanguage().getMessage("notHoldingItemWithDisplayName"));
+            plugin.getMessaging().sendMessage(sender, true, plugin.getLanguage().getMessage("notHoldingItemWithDisplayName"));
             return;
         }
 
@@ -133,13 +118,13 @@ public class DisplayNameCMD implements CommandExecutor {
             conversation.begin();
         } else {
             plugin.getDisplayNameMap().put(itemId, senderPlayer.getItemInHand().getItemMeta().getDisplayName());
-            plugin.getMessaging().sendMessage(sender, false, true, plugin.getLanguage().getMessage("nameChanged"));
+            plugin.getMessaging().sendMessage(sender, true, plugin.getLanguage().getMessage("nameChanged"));
         }
     }
 
     private void removeSubCommand(CommandSender sender) {
         if (!(sender instanceof Player)) {
-            plugin.getMessaging().sendMessage(sender, false, false, plugin.getLanguage().getMessage("commandPlayerRequired"));
+            plugin.getMessaging().sendMessage(sender, true, plugin.getLanguage().getMessage("commandPlayerRequired"));
             return;
         }
 
@@ -150,17 +135,17 @@ public class DisplayNameCMD implements CommandExecutor {
         Player senderPlayer = (Player) sender;
 
         if (senderPlayer.getItemInHand() == null) {
-            plugin.getMessaging().sendMessage(sender, false, true, plugin.getLanguage().getMessage("notHoldingItem"));
+            plugin.getMessaging().sendMessage(sender, true, plugin.getLanguage().getMessage("notHoldingItem"));
             return;
         } else if (senderPlayer.getItemInHand().getItemMeta() == null || senderPlayer.getItemInHand().getItemMeta().getDisplayName() == null) {
-            plugin.getMessaging().sendMessage(sender, false, true, plugin.getLanguage().getMessage("notHoldingItemWithDisplayName"));
+            plugin.getMessaging().sendMessage(sender, true, plugin.getLanguage().getMessage("notHoldingItemWithDisplayName"));
             return;
         }
 
         String itemId = senderPlayer.getItemInHand().getType().name() + ":" + senderPlayer.getItemInHand().getData().getData();
 
         if (!plugin.getDisplayNameMap().containsKey(itemId)) {
-            plugin.getMessaging().sendMessage(sender, false, true, plugin.getLanguage().getMessage("notSetDisplayName"));
+            plugin.getMessaging().sendMessage(sender, true, plugin.getLanguage().getMessage("notSetDisplayName"));
         } else {
             ConversationFactory conversationFactory = new ConversationFactory(plugin);
 

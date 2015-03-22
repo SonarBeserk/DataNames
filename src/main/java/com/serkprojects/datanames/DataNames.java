@@ -19,11 +19,11 @@
  * *********************************************************************************************************************
  */
 
-package me.sonarbeserk.datanames;
+package com.serkprojects.datanames;
 
-import me.sonarbeserk.beserkcore.plugin.JavaPlugin;
-import me.sonarbeserk.datanames.commands.DisplayNameCMD;
-import me.sonarbeserk.datanames.listeners.ItemListener;
+import com.serkprojects.serkcore.plugin.JavaPlugin;
+import com.serkprojects.datanames.commands.DisplayNameCMD;
+import com.serkprojects.datanames.listeners.ItemListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +63,10 @@ public class DataNames extends JavaPlugin {
     @Override
     public String getPermissionPrefix() {
         return getConfig().getString("settings.permissionPrefix");
+    }
+
+    @Override
+    public void onReload() {
     }
 
     /**

@@ -19,34 +19,34 @@
  * *********************************************************************************************************************
  */
 
-package me.sonarbeserk.datanames.conversations.nameremoval;
+package com.serkprojects.datanames.conversations.namechange;
 
-import me.sonarbeserk.datanames.DataNames;
+import com.serkprojects.datanames.DataNames;
 import org.bukkit.ChatColor;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 
-public class ConfirmNameRemovalPrompt extends StringPrompt {
+public class ConfirmNameChangePrompt extends StringPrompt {
     private DataNames plugin = null;
 
-    public ConfirmNameRemovalPrompt(DataNames plugin) {
+    public ConfirmNameChangePrompt(DataNames plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public String getPromptText(ConversationContext context) {
-        return ChatColor.translateAlternateColorCodes('&', plugin.getLanguage().getMessage("promptNameRemoval").replace("{termYes}", plugin.getLanguage().getMessage("termYes")).replace("{termNo}", plugin.getLanguage().getMessage("termNo")).replace("{timeout}", plugin.getConfig().getString("settings.timeout.changeDisplayName")));
+        return ChatColor.translateAlternateColorCodes('&', plugin.getLanguage().getMessage("promptNameChange").replace("{termYes}", plugin.getLanguage().getMessage("termYes")).replace("{termNo}", plugin.getLanguage().getMessage("termNo")).replace("{timeout}", plugin.getConfig().getString("settings.timeout.changeDisplayName")));
     }
 
     @Override
     public Prompt acceptInput(ConversationContext context, String s) {
         if (s.equalsIgnoreCase(plugin.getLanguage().getMessage("termYes")) || s.equalsIgnoreCase(String.valueOf(plugin.getLanguage().getMessage("termYes").toCharArray()[0]))) {
-            plugin.getDisplayNameMap().remove(String.valueOf(context.getSessionData("itemid")));
-            context.setSessionData("nameRemoved", true);
+            plugin.getDisplayNameMap().put(String.valueOf(context.getSessionData("itemid")), String.valueOf(context.getSessionData("name")));
+            context.setSessionData("nameChanged", true);
             return Prompt.END_OF_CONVERSATION;
         } else if (s.equalsIgnoreCase(plugin.getLanguage().getMessage("termNo")) || s.equalsIgnoreCase(String.valueOf(plugin.getLanguage().getMessage("termNo").toCharArray()[0]))) {
-            context.setSessionData("nameRemoved", false);
+            context.setSessionData("nameChanged", false);
             return Prompt.END_OF_CONVERSATION;
         }
 

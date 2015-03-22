@@ -4,7 +4,7 @@
 
     <!-- Project information -->
     <name>DataNames</name>
-    <groupId>me.sonarbeserk</groupId>
+    <groupId>com.serkprojects</groupId>
     <artifactId>datanames</artifactId>
     <version>1.0</version>
     <inceptionYear>2014</inceptionYear>
@@ -17,8 +17,8 @@
         <project.name.short>dn</project.name.short>
         <project.permissionprefix>dn</project.permissionprefix>
 
-        <project.main>me.sonarbeserk.datanames.DataNames</project.main>
-        <project.author>SonarBeserk</project.author>
+        <project.main>com.serkprojects.datanames.DataNames</project.main>
+        <project.authors>SonarBeserk</project.authors>
 
         <project.depends>[]</project.depends>
 
@@ -44,8 +44,8 @@
         </dependency>
 
         <dependency>
-            <groupId>me.sonarbeserk</groupId>
-            <artifactId>beserkcore</artifactId>
+            <groupId>com.serkprojects</groupId>
+            <artifactId>serkcore</artifactId>
             <version>1.1</version>
         </dependency>
     </dependencies>
@@ -122,32 +122,6 @@
                         <goals>
                             <goal>format</goal>
                         </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.3</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <artifactSet>
-                                <includes>
-                                    <include>me.sonarbeserk:beserkcore</include>
-                                </includes>
-                            </artifactSet>
-                            <relocations>
-                                <relocation>
-                                    <pattern>me.sonarbeserk.beserkcore</pattern>
-                                    <shadedPattern>me.sonarbeserk.shifted.beserkcore</shadedPattern>
-                                </relocation>
-                            </relocations>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
